@@ -1,20 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-/// Complies with `GetStateUpdater`
-///
-/// This mixin's function represents a `GetStateUpdater`, and might be used
-/// by `BindBuilder()`, `SimpleBuilder()` (or similar) to comply
-/// with [GetStateUpdate] signature. REPLACING the [StateSetter].
-/// Avoids the potential (but extremely unlikely) issue of having
-/// the Widget in a dispose() state, and abstracts the
-/// API from the ugly fn((){}).
 mixin GetStateUpdaterMixin<T extends StatefulWidget> on State<T> {
-  // To avoid the creation of an anonym function to be GC later.
-  // ignore: prefer_function_declarations_over_variables
-
-  /// Experimental method to replace setState((){});
-  /// Used with GetStateUpdate.
   void getUpdate() {
     if (mounted) setState(() {});
   }
@@ -69,7 +56,6 @@ class BindBuilderState<T extends GetxController> extends State<BindBuilder<T>>
   void initState() {
     // _BindBuilderState._currentState = this;
     super.initState();
-    widget.binding!.dependencies();
     widget.initState?.call(this);
 
     var isRegistered = GetInstance().isRegistered<T>(tag: widget.tag);
@@ -102,9 +88,6 @@ class BindBuilderState<T extends GetxController> extends State<BindBuilder<T>>
     _subscribeToController();
   }
 
-  /// Register to listen Controller's events.
-  /// It gets a reference to the remove() callback, to delete the
-  /// setState "link" from the Controller.
   void _subscribeToController() {
     _remove?.call();
     _remove = (widget.id == null)
