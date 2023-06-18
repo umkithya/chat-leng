@@ -1,8 +1,8 @@
-import 'package:chat_leng/app/routes/go_router.dart';
+import 'package:chat_leng/detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'app/core/values/text_styles.dart';
+import 'package:go_router/go_router.dart';
+import 'home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,11 +15,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp.router(
       debugShowCheckedModeBanner: false,
-      theme: lightThemeData,
-      darkTheme: darkThemeData,
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
       routeInformationProvider: router.routeInformationProvider,
     );
   }
 }
+
+final router = GoRouter(routes: [
+  GoRoute(
+      path: "/",
+      builder: (context, state) => const HomePage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+            child: const HomePage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    FadeTransition(opacity: animation, child: child),
+          ),
+      routes: [
+        GoRoute(
+          path: "detail",
+          builder: (context, state) => const DetailPage(),
+        )
+      ])
+]);
