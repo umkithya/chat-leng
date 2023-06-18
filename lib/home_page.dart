@@ -5,10 +5,13 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -70,6 +73,12 @@ class _HomePageState extends State<HomePage> {
               tileOverlayId: const TileOverlayId("pp"),
               tileProvider: AssetTileProvider())
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.go("/home");
+        },
+        child: const Icon(Icons.arrow_back_ios_new),
       ),
     );
   }

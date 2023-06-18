@@ -34,8 +34,10 @@ final router = GoRouter(routes: [
           ),
       routes: [
         GoRoute(
-          path: "detail",
-          builder: (context, state) => const DetailPage(),
+          path: ":detail",
+          builder: (context, state) => DetailPage(
+            ok: state.pathParameters['detail'].toString(),
+          ),
         )
       ])
 ]);
